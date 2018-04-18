@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        [class^='box']{
+            height: 100px;
+            width: 100px;
+            border: 1px solid red;
+            cursor: all-scroll;
+            margin-top:10px;
+        }
+        .b2{
+            height: 200px;
+            width: 50px;
+            padding:10px;
+        }
+    </style>
+</head> 
+<body>
+    <button id="button">aaaa</button>
+    <div class="box0 b2" style="height: 200px;width:100px;"></div>
+    <div class="box1 b2"></div>
+    <!-- 1.获取行内style样式 -->
+    <script>
+        var btn = document.getElementById("button");
+        var box0 = document.getElementsByClassName("box0")[0];
+        btn.addEventListener('click',function(event){
+            console.log("获取行内style样式",box0.style.height,box0.style.width);
+        },false);
+    </script>
+    <!-- 2.获取计算后的CSS样式 -->
+    <script>
+        var btn = document.getElementById("button");
+        var box1 = document.getElementsByClassName("box1")[0];
+        btn.addEventListener('click',function(event){
+            var style = null;
+            if(window.getComputedStyle){
+                style = window.getComputedStyle(box1,null);
+            }else{
+                style = obj.currentStyle;   //IE
+            }
+            console.log("获取计算后的CSS样式",style.height,style.width);
+        },false);
+    </script>
+    <!-- 3.获取<link>和<style>标签写入的样式(这些样式是未经过计算的)-->
+    <script>
+        var obj = document.styleSheets[0],
+            rule = null;
+        if(obj.cssRules[0]){
+            rule = obj.cssRules[0];
+        }else{
+            rule = obj.rule[0];
+        }
+        console.log(rule.style.width);
+    </script>
+    <!-- 以上的三种CSS获取元素大小的方法，只能获取元素的CSS大小，却无法获取元素本身实际的大小。比如加上了内边距、滚动条、边框之类的。 -->
+
+    <!-- 4.获取元素的实际大小 -->
+    <script>
+        // clientWidth和clientHeight
+        // scrollWidth和scrollHeight
+        // offsetWidth和offsetHeight
+    </script>
+
+    <!-- 5.获取元素周边大小 -->
+    <script>
+        //  clientLeft和clientTop获取边框大小
+        //  offsetLeft和offsetTop(注意offsetParent)
+        //  scrollTop和scrollLeft这组属性可以获取滚动条被隐藏(滚动条上方区域)的区域大小，也可设置定位到该区域。
+    </script>
+    <script>
+        // 6.getBoundingClientRect()这个方法返回    一个矩形对象，包含四个属性：left、top、right和bottom。分别表示元素各边与页面上边和左边的距离。
+        var box0 = document.getElementsByClassName("box0")[0];
+        function gGetRect(element){
+            var rect = element.getBoundingClientRect();
+            var top = document.documentElement.clientTop;
+            var left = document.documentElement.clientLeft;
+            console.log(rect);
+            return {
+                top: rect.top - top,
+                bottom: rect.bottom - top,
+                left: rect.left - left,
+                right: rect.right - left,
+                width: rect.width,
+                height: rect.height
+            }
+        }
+        console.log(gGetRect(box0));
+    </script>
+</body>
+</html>
