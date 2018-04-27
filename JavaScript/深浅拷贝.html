@@ -5,17 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <style>
+        p{
+            color:red;
+        }
+    </style>
 </head>
 <body>
     <pre>
-        数据类型：
+        数据类型：原始类型以及引用类型
         对于Number,String,Boolean,Null,Undefined这些原始数据类型是保存在栈中，object引用类型保存在堆中
         原始类型的变量值被直接保存在变量对象内在进行操作时是对元数据直接进行操作，
         而引用类型的变量值则作为一个指针保存在变量对象内，该指针指向实际对象在内存中的存储位置,操作时也只是改变指针，当指针指向的内容发生改变时，所有指向该指针的变量都会发生改变。
     </pre>
+    <p>鉴别数据类型：</p>
     <pre>
-        鉴别数据类型：
-        1.鉴别原始数据类型的最佳方法：typeof
+        1.鉴别原始类型的最佳方法：typeof
         console.log(typeof 'a');           // "string"
         console.log(typeof 10);            // "number"
         console.log(typeof false);         // "boolean"
@@ -30,6 +35,13 @@
         js 会对数据类型坐默认转换；
         比如：
         console.log("5" == 5) 也会返回 true
+    </pre>
+    <pre>
+        2.鉴别引用类型
+        鉴别引用类型中的函数类型最简单的方法是 typeof 
+        function aa(){};
+        console.log(typeof aa)   // "function"
+        对于其他类型的引用类型进行区分却没有什么作用因为返回的都是object所以这样进行判断没有什么卵用;
 
     </pre>
 </body>
