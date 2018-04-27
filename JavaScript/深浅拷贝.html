@@ -73,6 +73,13 @@
         从demo1中可以看出对拷贝的副本数据进行操做时数据是原始数据类型时是相互不影响的,但是改变引用类型时会都改变原数据；这样会相互影响；
         那么怎么自己实现浅拷贝呢(参照demo2)
     </pre>
+    <pre>
+        2.深拷贝
+        从浅拷贝解释基本可以明白，深拷贝就是 ‘完全'拷贝，拷贝之后新旧数据完全分离，不再共用对象类型的属性值，不会互相影响。
+        实现参考（demo3）;
+        *使用JSON.toStringify()和JSON.parse(); 这种方法不能拷贝属性值为函数的对象 这种是把数组转化为JSON字符串类型（原始类型）最后再还原
+
+    </pre>
     <!-- demo1 -->
     <script>
         //测试数据
@@ -94,11 +101,37 @@
             for (var item in target) { //对数组或者对象进行遍历
                 //只复制元素自身的属性，不复制原型链上的
                 if (target.hasOwnProperty(item)) {
-                    newObj[item] = target[item]
+                    newObj[item] = target[item];
                 }
             }
             return newObj;
         }
+        var arr = [1,2,3,4,5,6,{a:"111"}];
+        shallowCopy(arr);
+    </script>
+    <script>
+        //JSON方法进行拷贝
+        var test = [1, 'a', { name: 'lei', age: 18 }];
+        var copy1 = JSON.parse(JSON.stringify(test)); //特殊方式 
+        console.log(copy1);
+        copy1[2].name = 'zhang'
+        console.log(test);          //[1,'a',{name:'lei',age:18}] 未受到影响
+
+        //在浅拷贝基础上实现深拷贝
+        function deepCopy(target) {
+            if (typeof target !== 'object') return;
+            //判断目标类型，来创建返回值
+            var newObj = target instanceof Array ? [] : {};
+            
+            for (var item in target) {
+                //只复制元素自身的属性，不复制原型链上的
+                if (target.hasOwnProperty(item)) {
+                    newObj[item] = typeof target[item] == 'object' ? arguments.callee(target[item]) : target[item] //判断属性值类型
+                }
+            }
+            return newObj;
+        }
+        console.log(deepCopy(arr));
     </script>
 </body>
 </html>
