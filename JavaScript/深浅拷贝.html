@@ -38,11 +38,67 @@
     </pre>
     <pre>
         2.鉴别引用类型
-        鉴别引用类型中的函数类型最简单的方法是 typeof 
+        *鉴别引用类型中的函数类型最简单的方法是 typeof 
         function aa(){};
         console.log(typeof aa)   // "function"
         对于其他类型的引用类型进行区分却没有什么作用因为返回的都是object所以这样进行判断没有什么卵用;
+        *为了便于判断引用类型可以使用 instanceof 操作符
+        instanceof 以一个对象和一个构造函数为参数，如果对象是构造函数所指定的类型的一个实例，instanceof 返回 true；否则返回 false。
+        var items = [];
+        var object = {};
 
+        function reflect(value) {
+            return value;
+        }
+
+        console.log(items instanceof Array);       // true
+        console.log(object instanceof Object);     // true
+        console.log(reflect instanceof Function);  // true
+        但是instanceof实际上判断的是一个对象是否是某一个函数的实例；但是在js中是使用原型链实现继承的只要是引用类型，都会继承Object这就造成了
+        只要判断引用类型console.log(obj instanceof Object); 都会是true;
+        *仅仅支持鉴别数组
+        ECMAScript 5 引入了 Array.isArray(), IE8 或更早版本不支持这种方法。
+        var items = [];
+        console.log(Arrray.isArray(items));  // true
     </pre>
+    <pre>
+        万能方法：
+        Object.prototype.toString.call(value); 可以用来做通用判断
+    </pre>
+    <p>数据拷贝</p>
+    <pre>
+        1.浅拷贝
+        浅拷贝就是流于表面的拷贝方式；当属性值为对象类型时，只拷贝了对象数据的引用，导致新旧数据没有完全分离，还会互相影响。（参见demo1）;
+        数组中的浅拷贝可以来用可以生成新副本的数组方法比如slice()、concat();
+        从demo1中可以看出对拷贝的副本数据进行操做时数据是原始数据类型时是相互不影响的,但是改变引用类型时会都改变原数据；这样会相互影响；
+        那么怎么自己实现浅拷贝呢(参照demo2)
+    </pre>
+    <!-- demo1 -->
+    <script>
+        //测试数据
+        var array1 = ['a', 1, true, { name: 'lei', age: 18 }];
+        //concat() slice() 实现浅拷贝
+        var array2 = array1.concat()
+        //修改拷贝后的数据
+        array2[0] = 'b';      //array1[0]是原始数据类型 所以是直接赋值的
+        array2[3].name = 'zhang';  //array1[3]是对象数据类型 所以拷贝的是对象的引用，其实还是和原数组使用同一对象
+        console.log(array1);  // ['a',1,true,{name:'zhang',age:18}]
+    </script>
+    <!-- demo2 -->
+    <script>
+        function shallowCopy(target) {
+            //判断是否为对象或者数组
+            if (typeof target !== 'object') return;
+            //判断目标类型，来创建返回值
+            var newObj = target instanceof Array ? [] : {};
+            for (var item in target) { //对数组或者对象进行遍历
+                //只复制元素自身的属性，不复制原型链上的
+                if (target.hasOwnProperty(item)) {
+                    newObj[item] = target[item]
+                }
+            }
+            return newObj;
+        }
+    </script>
 </body>
 </html>
