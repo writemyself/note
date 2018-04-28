@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /**
+         * 循环选取一个数组内的值
+         * 递增数据利用数组长度取余的思想
+         */
+        //数组
+        var arr = ["a","b","c","d","e"];
+        //级数
+        var number = 0;
+        //选取
+        function select(){
+            var selectIndex = number % arr.length;
+            number++;
+            console.log(arr[selectIndex],number);
+        }
+        setInterval(select,1000);
+    </script>
+</body>
+</html>
