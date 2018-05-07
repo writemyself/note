@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>flex 布局</title>
+</head>
+<body>
+    <pre>
+        采用Flex布局的元素是Flex容器,容器的子元素被称为 Flex 项目, 容器默认有两个轴心线用
+        项目的对齐与排列（水平main axis 垂直 across axis）开始的位置为轴的start 结束为end
+        主轴是水平方向时 flex-direction: row;
+        主轴是垂直方向时 flex-direction: column;
+        *将任意元素的 display 属性设置为 flex，可将其转换为Flex容器 设为Flex容器后。
+        子元素的 float、clear 和 vertical-align 属性将失效
+    </pre>
+    <pre>
+        Flex容器属性
+        主轴方向：水平排列（默认） | 水平反向排列 | 垂直排列 | 垂直反向排列
+        flex-direction: row | row-reverse | column | column-reverse;
+
+        换行：不换行（默认） | 换行 | 反向换行(第一行在最后面)
+        flex-wrap: nowrap | wrap | wrap-reverse;
+
+        flex-direction属性和flex-wrap属性的简写形式，默认值为row nowrap
+        flex-flow: <flex-direction> || <flex-wrap>;
+
+        主轴对齐方式：起点对齐（默认） | 终点对齐 | 居中对齐 | 两端对齐 | 分散对齐
+        justify-content: flex-start | flex-end | center | space-between | space-around;
+
+        交叉轴对齐方式：拉伸对齐（默认） | 起点对齐 | 终点对齐 | 居中对齐 | 第一行文字的基线对齐
+        align-items: stretch | flex-start | flex-end | center | baseline;
+
+        多根轴线对齐方式：拉伸对齐（默认） | 起点对齐 | 终点对齐 | 居中对齐 | 两端对齐 | 分散对齐
+        align-content: stretch | flex-start | flex-end | center | space-between | space-around;
+    </pre>
+
+    <pre>
+        Flex项目属性
+        顺序：数值越小越靠前，默认为0
+        order: <number>;
+
+        放大比例：默认为0，如果有剩余空间也不放大，值为1则放大，2是1的双倍大小，以此类推
+        flex-grow: <number>;
+
+        缩小比例：默认为1，如果空间不足则会缩小，值为0不缩小
+        flex-shrink: <number>;
+
+        项目自身大小：默认auto，为原来的大小，可设置固定值 50px/50%
+        flex-basis: <length> | auto;
+
+        flex-grow, flex-shrink 和 flex-basis的简写，默认值为0 1 auto
+        两个快捷值：auto (1 1 auto) 和 none (0 0 auto)
+        flex:none | [ <'flex-grow'> <'flex-shrink'>? || <'flex-basis'> ]
+
+        项目自身对齐：继承父元素（默认） | 起点对齐 | 终点对齐 | 居中对齐 | 基线对齐 | 拉伸对齐
+        align-self: auto | flex-start | flex-end | center | baseline | stretch;
+    </pre>
+</body>
+</html>
